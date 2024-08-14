@@ -1,0 +1,23 @@
+$header-height: 80px;
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $header-height;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  z-index: 99;
+}
+
+.app-container {
+  min-height: calc(100vh - $header-height);
+  position: relative;
+  top: $header-height;
+  background-color: #f2f3f4;
+}

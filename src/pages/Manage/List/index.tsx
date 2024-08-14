@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styles from './style.module.scss'
-import SurveyCard from '../../components/SurveyCard'
+import SurveyCard from '@/components/SurveyCard'
 
 type PropTypes = {}
 
