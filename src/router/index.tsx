@@ -64,3 +64,5 @@ const Routes: React.FC = () => {
 }
 
 export default Routes
+
+export const MANAGE_INDEX = '/manage/list'
