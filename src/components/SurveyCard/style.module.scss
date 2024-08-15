@@ -1,5 +1,5 @@
 .survey-card {
-  margin: 20px;
+  margin-bottom: 20px;
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 8px;
@@ -23,6 +23,10 @@
       text-align: end;
       color: #4d5656;
       font-size: 14px;
+
+      span {
+        margin-left: 12px;
+      }
     }
   }
 
