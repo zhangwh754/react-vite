@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 import styles from './style.module.scss'
+import HeaderIcon from '@/components/HeaderIcon'
 
 type PropTypes = {}
 
@@ -8,7 +9,7 @@ const App: FC<PropTypes> = () => {
   return (
     <>
       <header>
-        <h3>问卷调查</h3>
+        <HeaderIcon />
       </header>
       <main className={styles['app-container']}>
         <Outlet></Outlet>
