@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { Outlet } from 'react-router-dom'
+import dayjs from 'dayjs'
 import styles from './style.module.scss'
 import HeaderIcon from '@/components/HeaderIcon'
 
@@ -14,7 +15,7 @@ const App: FC<PropTypes> = () => {
       <main className={styles['app-container']}>
         <Outlet></Outlet>
       </main>
-      <footer>footer</footer>
+      <footer>慕问卷 &copy; 2024 - {dayjs().format('YYYY')}</footer>
     </>
   )
 }

@@ -17,6 +17,9 @@ importers:
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
+      dayjs:
+        specifier: ^1.11.12
+        version: 1.11.12
       normalize.css:
         specifier: ^8.0.1
         version: 8.0.1
