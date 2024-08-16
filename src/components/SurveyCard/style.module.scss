@@ -12,22 +12,8 @@
   .header {
     display: flex;
     align-items: center;
-
-    .left {
-      flex: 1;
-      color: #3498db;
-    }
-
-    .right {
-      flex: 1;
-      text-align: end;
-      color: #4d5656;
-      font-size: 14px;
-
-      span {
-        margin-left: 12px;
-      }
-    }
+    justify-content: space-between;
+    color: #4d5656;
   }
 
   .content {
@@ -35,20 +21,5 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    $button-span: 20px;
-
-    .left {
-      button {
-        margin-right: $button-span;
-      }
-    }
-
-    .right {
-      button {
-        margin-left: $button-span;
-        text-align: right;
-      }
-    }
   }
 }

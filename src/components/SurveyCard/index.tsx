@@ -1,6 +1,9 @@
 import React, { FC } from 'react'
-import styles from './style.module.scss'
+import { Link } from 'react-router-dom'
+import { Button, Space, Divider, Tag } from 'antd'
+import { EditOutlined, BarChartOutlined, StarOutlined, DeleteOutlined } from '@ant-design/icons'
 import classNames from 'classnames'
+import styles from './style.module.scss'
 
 type PropTypes = {
   id: number
@@ -17,23 +20,35 @@ const SurveyCard: FC<PropTypes> = props => {
   return (
     <div className={styles['survey-card']}>
       <div className={styles.header}>
-        <div className={styles.left}>{title}</div>
-        <div className={styles.right}>
+        <Space>
+          {isStar && <StarOutlined style={{ color: '#f39c12' }} />}
+          <Link style={{ color: '#3498db' }} to={'/'}>
+            {title}
+          </Link>
+        </Space>
+        <Space>
           <span className={classNames('time', { active: isPublish })}>
-            {isPublish ? '已发布' : '未发布'}
+            {isPublish ? <Tag color="green">已发布</Tag> : <Tag color="purple">未发布</Tag>}
           </span>
           <span>{createTime}</span>
-        </div>
+        </Space>
       </div>
+      <Divider style={{ margin: '15px auto 10px' }} />
       <div className={styles.content}>
-        <div className={styles.left}>
-          <button>编辑问卷</button>
-          <button>数据统计</button>
-        </div>
-        <div className={styles.right}>
-          <button>{isStar ? '取消收藏' : '收藏'}</button>
-          <button>删除</button>
-        </div>
+        <Space>
+          <Button icon={<EditOutlined />} type="primary">
+            编辑问卷
+          </Button>
+          <Button icon={<BarChartOutlined />}>数据统计</Button>
+        </Space>
+        <Space>
+          <Button icon={<StarOutlined style={{ color: isStar ? '#f39c12' : '#000' }} />}>
+            {isStar ? '取消收藏' : '收藏'}
+          </Button>
+          <Button icon={<DeleteOutlined />} type="primary" danger>
+            删除
+          </Button>
+        </Space>
       </div>
     </div>
   )

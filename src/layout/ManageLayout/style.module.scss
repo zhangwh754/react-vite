@@ -15,26 +15,6 @@
       flex-direction: column;
       align-items: flex-end;
       row-gap: 5px;
-
-      .link {
-        width: 84px;
-        display: inline-block;
-        padding: 8px;
-        color: inherit;
-        text-decoration: none;
-        background-color: transparent;
-        outline: none;
-        text-align: end;
-
-        // &.active {
-        //   background-color: #fff;
-        //   border-radius: 4px;
-        // }
-        &:hover {
-          background-color: #fff;
-          border-radius: 4px;
-        }
-      }
     }
   }
 
