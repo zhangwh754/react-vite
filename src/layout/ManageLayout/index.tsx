@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { Space, Button, Divider } from 'antd'
 import { BarChartOutlined, DeleteOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons'
 import styles from './style.module.scss'
@@ -9,6 +9,7 @@ type PropTypes = {}
 
 const ManageLayout: FC<PropTypes> = () => {
   const nav = useNavigate()
+  const { pathname } = useLocation()
 
   return (
     <>
@@ -18,13 +19,25 @@ const ManageLayout: FC<PropTypes> = () => {
             新建问卷
           </Button>
           <Divider />
-          <Button icon={<BarChartOutlined />} onClick={() => nav(MANAGE_INDEX)}>
+          <Button
+            type={pathname.includes('/manage/list') ? 'default' : 'text'}
+            icon={<BarChartOutlined />}
+            onClick={() => nav(MANAGE_INDEX)}
+          >
             我的问卷
           </Button>
-          <Button icon={<StarOutlined />} onClick={() => nav(MANAGE_STAR)}>
+          <Button
+            type={pathname.includes('/manage/star') ? 'default' : 'text'}
+            icon={<StarOutlined />}
+            onClick={() => nav(MANAGE_STAR)}
+          >
             标星问卷
           </Button>
-          <Button icon={<DeleteOutlined />} onClick={() => nav(MANAGE_TRASH)}>
+          <Button
+            type={pathname.includes('/manage/trash') ? 'default' : 'text'}
+            icon={<DeleteOutlined />}
+            onClick={() => nav(MANAGE_TRASH)}
+          >
             回收站
           </Button>
         </Space>
