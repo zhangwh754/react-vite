@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
+import React, { FC, Suspense } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
-import { Space, Button, Divider } from 'antd'
+import { Space, Button, Divider, Skeleton } from 'antd'
 import { BarChartOutlined, DeleteOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons'
 import styles from './style.module.scss'
 import { MANAGE_INDEX, MANAGE_STAR, MANAGE_TRASH } from '@/router'
@@ -42,7 +42,9 @@ const ManageLayout: FC<PropTypes> = () => {
           </Button>
         </Space>
         <div className={styles['manage-content']}>
-          <Outlet></Outlet>
+          <Suspense fallback={<Skeleton />}>
+            <Outlet></Outlet>
+          </Suspense>
         </div>
       </div>
     </>
