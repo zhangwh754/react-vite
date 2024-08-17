@@ -2,6 +2,7 @@ import React, { ChangeEvent, FC, useEffect, useState } from 'react'
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { Input } from 'antd'
 import styles from './style.module.scss'
+import { SEARCH_KEYWORD } from '@/constant'
 
 const { Search } = Input
 
@@ -14,14 +15,14 @@ const App: FC<PropTypes> = () => {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    const searchVal = searchParams.get('keyword') || ''
+    const searchVal = searchParams.get(SEARCH_KEYWORD) || ''
     setSearch(searchVal)
   }, [])
 
   const onSearch = (val: string) => {
     nav({
       pathname: pathname,
-      search: `keyword=${val}`,
+      search: `${SEARCH_KEYWORD}=${val}`,
     })
   }
 
