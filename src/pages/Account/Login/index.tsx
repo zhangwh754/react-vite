@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Space, Typography, Form, Input, Button, Checkbox } from 'antd'
+import { Space, Typography, Form, Input, Button, Checkbox, message } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import styles from './style.module.scss'
 import { REGISTER_URL } from '@/router'
@@ -43,6 +43,8 @@ const Login: FC<PropTypes> = () => {
     } else {
       forgetUserInfo()
     }
+
+    message.success('登录成功')
   }
 
   return (
