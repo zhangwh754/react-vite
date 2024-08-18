@@ -11,6 +11,8 @@ type SurveyQuery = {
   isPublish: boolean
   isStar: boolean
   isDelete: boolean
+  pageNum: number
+  pageSize: number
 }
 
 export async function getSurveyListData(query: Partial<SurveyQuery> = {}): Promise<Res> {
