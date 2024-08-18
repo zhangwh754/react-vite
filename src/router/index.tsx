@@ -3,7 +3,7 @@ import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-d
 
 const MainLayout = React.lazy(() => import('@/layout/MainLayout'))
 const ManageLayout = React.lazy(() => import('@/layout/ManageLayout'))
-const QuestionLayout = React.lazy(() => import('@/layout/QuestionLayout'))
+const SurveyLayout = React.lazy(() => import('@/layout/SurveyLayout'))
 
 const Home = React.lazy(() => import('@/pages/Home'))
 const Login = React.lazy(() => import('@/pages/Account/Login'))
@@ -57,10 +57,10 @@ const routes: RouteObject[] = [
   },
   {
     path: 'question',
-    element: <QuestionLayout />,
+    element: <SurveyLayout />,
     children: [
       {
-        path: 'edit',
+        path: 'edit/:id',
         element: <Edit />,
       },
     ],

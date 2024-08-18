@@ -11,3 +11,9 @@ export async function getSurveyListData(): Promise<Res> {
 
   return res
 }
+
+export async function createNewSurvey(): Promise<Res> {
+  const res = await service.post('/survey')
+
+  return res
+}

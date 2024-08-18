@@ -14,9 +14,9 @@ const App: FC<PropTypes> = () => {
   const { surveyList, loading, error } = getLoadingSurveyListData()
 
   useEffect(() => {
-    if (error == -99) {
-      console.log('custom error')
-    }
+    // if (error == -99) {
+    //   console.log('custom error')
+    // }
   }, [error])
 
   return (
