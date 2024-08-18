@@ -6,8 +6,15 @@ export type Res = {
 
 export type ErrorCode = number | undefined
 
-export async function getSurveyListData(): Promise<Res> {
-  const res = await service.get('/survey')
+type SurveyQuery = {
+  keyword: string
+  isPublish: boolean
+  isStar: boolean
+  isDelete: boolean
+}
+
+export async function getSurveyListData(query: Partial<SurveyQuery> = {}): Promise<Res> {
+  const res = await service.get('/survey', { params: query })
 
   return res
 }
