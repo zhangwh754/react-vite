@@ -1,41 +1,28 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Typography } from 'antd'
 import styles from './style.module.scss'
 import SurveyCard from '@/components/SurveyCard'
 import SearchInput from '@/components/SearchInput'
+import { getSurveyListData } from '@/network'
 
 const { Title } = Typography
 
 type PropTypes = {}
 
-const surveyDataList = [
-  {
-    id: 1,
-    title: '问卷1',
-    answerCount: 0,
-    createTime: '2024-08-12 00:00:00',
-    isStar: false,
-    isPublish: false,
-  },
-  {
-    id: 2,
-    title: '问卷2',
-    answerCount: 3,
-    createTime: '2024-08-01 00:00:00',
-    isStar: false,
-    isPublish: true,
-  },
-  {
-    id: 3,
-    title: '问卷3',
-    answerCount: 10,
-    createTime: '2024-07-31 00:00:00',
-    isStar: true,
-    isPublish: true,
-  },
-]
-
 const App: FC<PropTypes> = () => {
+  const [surveyList, setSurveyList] = useState<any[]>([])
+
+  useEffect(() => {
+    async function foo() {
+      const data = await getSurveyListData()
+
+      const { list, total } = data
+
+      setSurveyList(list)
+    }
+    foo()
+  }, [])
+
   return (
     <>
       <div className={styles['list-container']}>
@@ -43,7 +30,8 @@ const App: FC<PropTypes> = () => {
           <Title level={2}>问卷一览</Title>
           <SearchInput />
         </div>
-        {surveyDataList.map(survey => {
+
+        {surveyList.map(survey => {
           const { id } = survey
 
           return <SurveyCard key={id} {...survey}></SurveyCard>
