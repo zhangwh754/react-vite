@@ -1,27 +1,23 @@
-import React, { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
 import { Typography } from 'antd'
 import styles from './style.module.scss'
 import SurveyCard from '@/components/SurveyCard'
 import SearchInput from '@/components/SearchInput'
-import { getSurveyListData } from '@/network'
+import getLoadingSurveyListData from '@/hooks/getLoadingSurveyListData'
+import LoadingIndicator from '@/components/LoadingIndicator'
 
 const { Title } = Typography
 
 type PropTypes = {}
 
 const App: FC<PropTypes> = () => {
-  const [surveyList, setSurveyList] = useState<any[]>([])
+  const { surveyList, loading, error } = getLoadingSurveyListData()
 
   useEffect(() => {
-    async function foo() {
-      const data = await getSurveyListData()
-
-      const { list, total } = data
-
-      setSurveyList(list)
+    if (error == -99) {
+      console.log('custom error')
     }
-    foo()
-  }, [])
+  }, [error])
 
   return (
     <>
@@ -31,11 +27,14 @@ const App: FC<PropTypes> = () => {
           <SearchInput />
         </div>
 
-        {surveyList.map(survey => {
-          const { id } = survey
+        <LoadingIndicator loading={loading} empty={surveyList.length == 0} />
 
-          return <SurveyCard key={id} {...survey}></SurveyCard>
-        })}
+        {surveyList &&
+          surveyList.map(survey => {
+            const { id } = survey
+
+            return <SurveyCard key={id} {...survey}></SurveyCard>
+          })}
       </div>
     </>
   )
