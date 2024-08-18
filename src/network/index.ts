@@ -17,3 +17,9 @@ export async function createNewSurvey(): Promise<Res> {
 
   return res
 }
+
+export async function getSurveyDetailData({ id = '0' } = {}): Promise<Res> {
+  const res = await service.get(`/survey/${id}`)
+
+  return res
+}

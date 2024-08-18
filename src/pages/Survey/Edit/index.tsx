@@ -1,14 +1,26 @@
 import React, { FC } from 'react'
-import { useParams } from 'react-router-dom'
+import getLoadingSurveyDetailData from '@/hooks/getLoadingSurveyDetailData'
+import LoadingIndicator from '@/components/LoadingIndicator'
 
 type PropTypes = {}
 
 const Edit: FC<PropTypes> = () => {
-  const { id } = useParams()
+  const { surveyDetail = {}, loading } = getLoadingSurveyDetailData()
+
+  const { id, title } = surveyDetail
 
   return (
     <>
-      <div>Edit: {id}</div>
+      <div>Edit Page</div>
+
+      <LoadingIndicator loading={loading} />
+
+      {!loading && (
+        <>
+          <p>id: {id}</p>
+          <p>title: {title}</p>
+        </>
+      )}
     </>
   )
 }
