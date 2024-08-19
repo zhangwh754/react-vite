@@ -5,15 +5,17 @@ type PropTypes = {
   loading: boolean
   empty?: boolean
   error?: string
+  full?: boolean
 }
 
 const LoadingIndicator: FC<PropTypes> = props => {
-  const { loading, empty = false, error = '' } = props
+  const { loading, empty = false, error = '', full = false } = props
 
   return (
     <>
       {loading && (
         <Spin
+          fullscreen={full}
           style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}
           size="large"
         />

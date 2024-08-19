@@ -36,16 +36,21 @@ const SurveyCard: FC<PropTypes> = props => {
       <Divider style={{ margin: '15px auto 10px' }} />
       <div className={styles.content}>
         <Space>
-          <Button icon={<EditOutlined />} type="primary">
+          <Button icon={<EditOutlined />} type="default">
             编辑问卷
           </Button>
-          <Button icon={<BarChartOutlined />}>数据统计</Button>
+          <Button disabled={!isPublish} icon={<BarChartOutlined />} type="default">
+            数据统计
+          </Button>
         </Space>
         <Space>
-          <Button icon={<StarOutlined style={{ color: isStar ? '#f39c12' : '#000' }} />}>
+          <Button
+            icon={<StarOutlined style={{ color: isStar ? '#f39c12' : '#000' }} />}
+            type="default"
+          >
             {isStar ? '取消收藏' : '收藏'}
           </Button>
-          <Button icon={<DeleteOutlined />} type="primary" danger>
+          <Button icon={<DeleteOutlined />} type="default" danger>
             删除
           </Button>
         </Space>
