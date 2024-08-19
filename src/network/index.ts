@@ -27,8 +27,26 @@ export async function createNewSurvey(): Promise<Res> {
   return res
 }
 
-export async function getSurveyDetailData({ id = '0' } = {}): Promise<Res> {
+export async function getSurveyDetailData(id: string): Promise<Res> {
   const res = await service.get(`/survey/${id}`)
+
+  return res
+}
+
+export async function updateSurveyData(id: string, query: Partial<SurveyQuery> = {}): Promise<Res> {
+  const res = await service.patch(`/survey/update/${id}`, query)
+
+  return res
+}
+
+export async function duplicateSurveyData(id: string): Promise<Res> {
+  const res = await service.post(`/survey/duplicate/${id}`)
+
+  return res
+}
+
+export async function deleteSurveyData(id: string): Promise<Res> {
+  const res = await service.delete(`/survey/delete/${id}`)
 
   return res
 }
