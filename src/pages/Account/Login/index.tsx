@@ -1,9 +1,11 @@
 import React, { FC, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Space, Typography, Form, Input, Button, Checkbox, message } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import styles from './style.module.scss'
-import { REGISTER_URL } from '@/router'
+import { MANAGE_INDEX, REGISTER_URL } from '@/router'
+import { useRequest } from 'ahooks'
+import { userLogin } from '@/network'
 
 type PropTypes = {}
 
@@ -29,11 +31,23 @@ const getUserInfoFromLocal = () => {
 
 const Login: FC<PropTypes> = () => {
   const [form] = Form.useForm()
+  const nav = useNavigate()
 
   useEffect(() => {
     const userinfo = getUserInfoFromLocal()
     form.setFieldsValue({ username: userinfo.username, password: userinfo.password })
   }, [])
+
+  const { loading, run } = useRequest(userLogin, {
+    manual: true,
+    onSuccess(data) {
+      const { token } = data
+
+      message.success('登录成功')
+
+      nav(MANAGE_INDEX)
+    },
+  })
 
   const onFinish = (e: any) => {
     const { remember, username, password } = e
@@ -44,7 +58,7 @@ const Login: FC<PropTypes> = () => {
       forgetUserInfo()
     }
 
-    message.success('登录成功')
+    run({ username, password })
   }
 
   return (
@@ -109,7 +123,7 @@ const Login: FC<PropTypes> = () => {
 
           <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
             <Space>
-              <Button type="primary" htmlType="submit">
+              <Button disabled={loading} type="primary" htmlType="submit">
                 登录
               </Button>
               <Link style={{ color: '#2e86c1', marginLeft: '32px' }} to={REGISTER_URL}>

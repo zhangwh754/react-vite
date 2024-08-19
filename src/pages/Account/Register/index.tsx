@@ -1,9 +1,11 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Space, Typography, Form, Input, Button, message } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import styles from './style.module.scss'
 import { LOGIN_URL } from '@/router'
+import { useRequest } from 'ahooks'
+import { userRegister } from '@/network'
 
 type PropTypes = {}
 
@@ -12,12 +14,19 @@ const { Title } = Typography
 const Login: FC<PropTypes> = () => {
   const nav = useNavigate()
 
+  const { loading, run } = useRequest(userRegister, {
+    manual: true,
+    onSuccess() {
+      message.success('注册成功')
+
+      nav(LOGIN_URL)
+    },
+  })
+
   const onFinish = (e: any) => {
     const { username, password } = e
 
-    message.success('注册成功')
-
-    nav(LOGIN_URL)
+    run({ username, password })
   }
 
   return (
@@ -96,7 +105,7 @@ const Login: FC<PropTypes> = () => {
 
           <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
             <Space>
-              <Button type="primary" htmlType="submit">
+              <Button disabled={loading} type="primary" htmlType="submit">
                 注册
               </Button>
               <Link style={{ color: '#2e86c1', marginLeft: '32px' }} to={LOGIN_URL}>

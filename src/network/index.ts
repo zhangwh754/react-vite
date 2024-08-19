@@ -6,6 +6,26 @@ export type Res = {
 
 export type ErrorCode = number | undefined
 
+/** 用户模块 */
+export async function getUser(): Promise<Res> {
+  const res = await service.get('/user')
+
+  return res
+}
+
+export async function userRegister(option: { username: string; password: string }): Promise<Res> {
+  const res = await service.post('/register', option)
+
+  return res
+}
+
+export async function userLogin(option: { username: string; password: string }): Promise<Res> {
+  const res = await service.post('/login', option)
+
+  return res
+}
+
+/** 问卷管理模块  */
 type SurveyQuery = {
   keyword: string
   isPublish: boolean
