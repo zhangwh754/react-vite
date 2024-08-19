@@ -5,7 +5,7 @@ import { EditOutlined, BarChartOutlined, StarOutlined, DeleteOutlined } from '@a
 import classNames from 'classnames'
 import styles from './style.module.scss'
 import { useRequest } from 'ahooks'
-import { deleteSurveyData, updateSurveyData } from '@/network'
+import { updateSurveyData } from '@/network'
 
 export type PropTypes = {
   id: string
@@ -38,14 +38,17 @@ const SurveyCard: FC<PropTypes> = props => {
   // 删除逻辑
   const [deleteState, setDeleteState] = useState(isDelete)
 
-  const { run: remove, loading: deleteLoading } = useRequest(deleteSurveyData, {
-    manual: true,
-    onSuccess() {
-      message.success('删除成功')
+  const { run: remove, loading: deleteLoading } = useRequest(
+    async id => await updateSurveyData(id, { isDelete: !deleteState }),
+    {
+      manual: true,
+      onSuccess() {
+        message.success('删除成功')
 
-      setDeleteState(!deleteState)
-    },
-  })
+        setDeleteState(!deleteState)
+      },
+    }
+  )
 
   return (
     !deleteState && (

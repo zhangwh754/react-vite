@@ -20,6 +20,7 @@ export default function useGetLoadingSurveyListData({
     data = {},
     error,
     loading,
+    refresh,
   } = useRequest(
     () => {
       const searchVal = searchParams.get(SEARCH_KEYWORD) || ''
@@ -40,5 +41,5 @@ export default function useGetLoadingSurveyListData({
 
   const { list = [], total = 0 } = data as Res
 
-  return { surveyList: list as any[], total, error: error as ErrorCode, loading }
+  return { surveyList: list as any[], total, error: error as ErrorCode, loading, refresh }
 }
