@@ -6,6 +6,7 @@ import styles from './style.module.scss'
 import { MANAGE_INDEX, REGISTER_URL } from '@/router'
 import { useRequest } from 'ahooks'
 import { userLogin } from '@/network'
+import { setTokenLocal } from '@/utils/user.local'
 
 type PropTypes = {}
 
@@ -42,6 +43,8 @@ const Login: FC<PropTypes> = () => {
     manual: true,
     onSuccess(data) {
       const { token } = data
+
+      setTokenLocal(token)
 
       message.success('登录成功')
 

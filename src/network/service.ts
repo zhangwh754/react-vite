@@ -1,6 +1,7 @@
 import { message } from 'antd'
 import axios from 'axios'
 import CustomError from './CustomError'
+import { getTokenLocal } from '@/utils/user.local'
 
 const env = import.meta.env
 
@@ -11,8 +12,15 @@ const service = axios.create({
 })
 
 // 添加请求拦截器
-axios.interceptors.request.use(
+service.interceptors.request.use(
   function (config) {
+    const token = getTokenLocal()
+
+    // 确保token存在，并且正确设置Authorization头部
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`
+    }
+
     return config
   },
   function (error) {
