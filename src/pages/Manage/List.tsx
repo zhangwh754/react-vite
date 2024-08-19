@@ -5,8 +5,10 @@ import SurveyCard from '@/components/SurveyCard'
 import type { PropTypes as SurveyItemType } from '@/components/SurveyCard'
 import SearchInput from '@/components/SearchInput'
 import LoadingIndicator from '@/components/LoadingIndicator'
-import { useDebounceFn, useRequest } from 'ahooks'
+import { useInViewport, useRequest } from 'ahooks'
 import { getSurveyListData } from '@/network'
+import { useSearchParams } from 'react-router-dom'
+import { SEARCH_KEYWORD } from '@/constant'
 
 const { Title } = Typography
 
@@ -16,13 +18,19 @@ const App: FC<PropTypes> = () => {
   const [surveyList, setSurveyList] = useState<SurveyItemType[]>([])
   const [isFinish, setIsFinish] = useState(false)
 
+  const [searchParams] = useSearchParams()
+
   const {
     loading,
     run: getSurveyList,
     refresh,
   } = useRequest(
     async () => {
-      return await getSurveyListData()
+      const searchVal = searchParams.get(SEARCH_KEYWORD) || ''
+
+      return await getSurveyListData({
+        keyword: searchVal,
+      })
     },
     {
       manual: true,
@@ -35,34 +43,42 @@ const App: FC<PropTypes> = () => {
     }
   )
 
-  useEffect(() => {
-    getSurveyList()
-  }, [])
+  // 分页请求
 
+  useEffect(() => {
+    setSurveyList([])
+    getSurveyList()
+  }, [searchParams])
+
+  // 滚动分页切换为dom可见就加载
   const loadMoreRef = useRef<HTMLElement>(null)
 
-  const { run: handleWindowContentScroll } = useDebounceFn(
-    () => {
-      if (!loadMoreRef.current) return
+  // const { run: handleWindowContentScroll } = useDebounceFn(
+  //   () => {
+  //     if (!loadMoreRef.current) return
 
-      const rect = loadMoreRef.current.getBoundingClientRect()
+  //     const rect = loadMoreRef.current.getBoundingClientRect()
 
-      if (rect.bottom < window.innerHeight) {
-        getSurveyList()
-      }
-    },
-    {
-      wait: 500,
-    }
-  )
+  //     if (rect.bottom < window.innerHeight) {
+  //       getSurveyList()
+  //     }
+  //   },
+  //   {
+  //     wait: 500,
+  //   }
+  // )
+
+  const [inViewport] = useInViewport(loadMoreRef)
 
   useEffect(() => {
-    window.addEventListener('scroll', handleWindowContentScroll)
-
-    return () => {
-      window.removeEventListener('scroll', handleWindowContentScroll)
+    // window.addEventListener('scroll', handleWindowContentScroll)
+    // return () => {
+    //   window.removeEventListener('scroll', handleWindowContentScroll)
+    // }
+    if (inViewport) {
+      getSurveyList()
     }
-  }, [])
+  }, [inViewport])
 
   return (
     <>
