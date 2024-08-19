@@ -38,6 +38,7 @@ const CustomPagination: FC<PropTypes> = props => {
   return (
     <>
       <Pagination
+        style={{ marginTop: '28px' }}
         align="center"
         current={current}
         pageSize={pageSize}
