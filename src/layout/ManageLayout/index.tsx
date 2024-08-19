@@ -6,6 +6,7 @@ import { useRequest } from 'ahooks'
 import styles from './style.module.scss'
 import { MANAGE_INDEX, MANAGE_STAR, MANAGE_TRASH } from '@/router'
 import { createNewSurvey } from '@/network'
+import ToTop from '@/components/ToTop'
 
 type PropTypes = {}
 
@@ -58,6 +59,8 @@ const ManageLayout: FC<PropTypes> = () => {
           </Suspense>
         </div>
       </div>
+
+      <ToTop />
     </>
   )
 }
