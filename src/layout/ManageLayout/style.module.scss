@@ -1,13 +1,15 @@
 .manage-layout {
+  position: relative;
   padding: 30px 20px;
   display: flex;
 
   .manage-panel {
+    position: fixed;
     width: 200px;
   }
 
   .manage-content {
-    margin-left: 48px;
+    margin-left: 248px;
     flex: 1;
   }
 }

@@ -5,7 +5,7 @@ import { EditOutlined, BarChartOutlined, StarOutlined, DeleteOutlined } from '@a
 import classNames from 'classnames'
 import styles from './style.module.scss'
 
-type PropTypes = {
+export type PropTypes = {
   id: number
   title: string
   answerCount: number
@@ -15,7 +15,7 @@ type PropTypes = {
 }
 
 const SurveyCard: FC<PropTypes> = props => {
-  const { title, createTime, isStar, isPublish } = props
+  const { title, createTime, isStar, isPublish, answerCount } = props
 
   return (
     <div className={styles['survey-card']}>
@@ -26,7 +26,8 @@ const SurveyCard: FC<PropTypes> = props => {
             {title}
           </Link>
         </Space>
-        <Space>
+        <Space size="middle">
+          {isPublish && <span>答卷人数: {answerCount}人</span>}
           <span className={classNames('time', { active: isPublish })}>
             {isPublish ? <Tag color="green">已发布</Tag> : <Tag color="purple">未发布</Tag>}
           </span>
