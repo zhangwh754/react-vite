@@ -1,36 +1,38 @@
 import { LOGIN_URL } from '@/router'
-import React, { FC, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { FC } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from './style.module.scss'
-import { useRequest } from 'ahooks'
-import { getUser } from '@/network'
 import { Avatar, Button, Space } from 'antd'
+import useGetLoadingUserData from '@/hooks/useGetLoadingUserData'
+import { removeTokenLocal } from '@/utils/user.local'
+import { useDispatch } from 'react-redux'
+import { logOutReducer } from '@/store/userReducer'
 
 type PropTypes = {}
 
 const UserInfo: FC<PropTypes> = () => {
-  const { loading, data, error, run } = useRequest(getUser, { manual: true })
-  const { pathname } = useLocation()
+  const { loading, username, nickname } = useGetLoadingUserData()
+  const dispatch = useDispatch()
   const nav = useNavigate()
 
-  useEffect(() => {
-    if (pathname.includes('/login') || pathname.includes('/register')) return
-
-    run()
-  }, [pathname])
+  const onLoginOut = () => {
+    removeTokenLocal()
+    dispatch(logOutReducer())
+    nav(LOGIN_URL)
+  }
 
   return (
     <>
-      {!loading && data ? (
+      {!loading && username ? (
         <Space align="center">
           <Avatar
             style={{ backgroundColor: '#f56a00', verticalAlign: 'middle' }}
             size="large"
             gap={4}
           >
-            {data.nickname}
+            {nickname}
           </Avatar>
-          <Button type="link" onClick={() => nav(LOGIN_URL)}>
+          <Button type="link" onClick={onLoginOut}>
             登出
           </Button>
         </Space>
