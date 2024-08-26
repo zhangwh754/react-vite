@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button, Space, Divider, Tag, message } from 'antd'
 import { EditOutlined, BarChartOutlined, StarOutlined, DeleteOutlined } from '@ant-design/icons'
 import classNames from 'classnames'
@@ -19,6 +19,8 @@ export type PropTypes = {
 
 const SurveyCard: FC<PropTypes> = props => {
   const { id, title, createTime, isStar, isPublish, answerCount, isDelete } = props
+
+  const nav = useNavigate()
 
   // 收藏逻辑
   const [starState, setStarState] = useState(isStar)
@@ -71,7 +73,15 @@ const SurveyCard: FC<PropTypes> = props => {
         <Divider style={{ margin: '15px auto 10px' }} />
         <div className={styles.content}>
           <Space>
-            <Button icon={<EditOutlined />} type="default">
+            <Button
+              icon={<EditOutlined />}
+              type="default"
+              onClick={() =>
+                nav({
+                  pathname: `/question/edit/${id}`,
+                })
+              }
+            >
               编辑问卷
             </Button>
             <Button disabled={!isPublish} icon={<BarChartOutlined />} type="default">

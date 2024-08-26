@@ -21,6 +21,22 @@
       background-color: #fff;
       overflow: auto;
       border-radius: 4px;
+
+      .canvas-row {
+        box-sizing: border-box;
+        margin: 12px;
+        padding: 12px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+
+        .canvas-item {
+          pointer-events: none;
+        }
+
+        &:hover {
+          border-color: #ccc;
+        }
+      }
     }
   }
 
