@@ -1,10 +1,10 @@
 import { Typography } from 'antd'
 import React, { FC } from 'react'
-import { defaultTitleProps, type TitleProps } from './interface'
+import { defaultTitleProps, type SurveyTitleProps } from './interface'
 
 const { Title } = Typography
 
-const SurveyTitle: FC<TitleProps> = props => {
+const SurveyTitle: FC<SurveyTitleProps> = props => {
   const { title, level, isCenter } = { ...defaultTitleProps, ...props }
 
   return (
