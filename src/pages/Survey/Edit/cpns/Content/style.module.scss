@@ -1,0 +1,33 @@
+.wrapper {
+  flex: 1;
+  padding: 12px 0;
+  display: flex;
+  overflow: hidden;
+
+  .left {
+    margin: 0 12px;
+    width: 265px;
+    background-color: #fff;
+    border-radius: 4px;
+  }
+
+  .middle {
+    flex: 1;
+
+    .canvas-container {
+      margin: 0 auto;
+      width: 420px;
+      height: 100%;
+      background-color: #fff;
+      overflow: auto;
+      border-radius: 4px;
+    }
+  }
+
+  .right {
+    margin: 0 12px;
+    width: 300px;
+    background-color: #fff;
+    border-radius: 4px;
+  }
+}
