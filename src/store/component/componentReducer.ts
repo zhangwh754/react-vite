@@ -1,25 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { ComponentPropsType } from '@/components/SurveyComponent'
+
+type ComponentType = {
+  id: string
+  title: string
+  componentType: 'surveyTitle' | 'surveyInput'
+  props: ComponentPropsType
+}
 
 export interface ComponentState {
-  componentsList: any[]
+  componentsList: ComponentType[]
 }
 
 const initialState: ComponentState = {
   componentsList: [],
 }
 
-export const userSlice = createSlice({
+export const componentSlice = createSlice({
   name: 'component',
   initialState,
   reducers: {
-    setReducer: (state: ComponentState, action: PayloadAction<ComponentState>) => {
+    setComponentsListReducer: (state: ComponentState, action: PayloadAction<ComponentState>) => {
       return action.payload
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setReducer } = userSlice.actions
+export const { setComponentsListReducer } = componentSlice.actions
 
-export default userSlice.reducer
+export default componentSlice.reducer
