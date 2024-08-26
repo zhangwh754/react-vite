@@ -1,34 +1,43 @@
 import React, { FC } from 'react'
+import { Spin } from 'antd'
 import styles from './style.module.scss'
-import SurveyTitle from '@/components/SurveyComponent/SurveyTitle/component'
-import SurveyInput from '@/components/SurveyComponent/SurveyInput/component'
+import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
+import { getComponentConfigByType } from '@/components/SurveyComponent'
 
-type PropTypes = {}
+type PropTypes = {
+  loading: boolean
+}
 
-const Content: FC<PropTypes> = () => {
+const Content: FC<PropTypes> = ({ loading }) => {
+  const { componentsList } = useGetSurveyDetailInfo()
+
   return (
     <>
       <div className={styles.wrapper}>
         <div className={styles.left}></div>
+
         <div className={styles.middle}>
-          <div className={styles['canvas-container']}>
-            <div className={styles['canvas-row']}>
-              <div className={styles['canvas-item']}>
-                <SurveyTitle></SurveyTitle>
-              </div>
+          {loading ? (
+            <div style={{ textAlign: 'center' }}>
+              <Spin></Spin>
             </div>
-            <div className={styles['canvas-row']}>
-              <div className={styles['canvas-item']}>
-                <SurveyInput></SurveyInput>
-              </div>
+          ) : (
+            <div className={styles['canvas-container']}>
+              {componentsList.map(item => {
+                const { id, componentType } = item
+
+                return (
+                  <div key={id} className={styles['canvas-row']}>
+                    <div className={styles['canvas-item']}>
+                      {getComponentConfigByType(componentType)(item.props)}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
-            <div className={styles['canvas-row']}>
-              <div className={styles['canvas-item']}>
-                <SurveyInput></SurveyInput>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
+
         <div className={styles.right}></div>
       </div>
     </>

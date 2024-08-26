@@ -18,5 +18,7 @@ export const componentConfig: ComponentConfigType[] = [SurveyTitleConfig, Survey
  * @param {string} type
  */
 export const getComponentConfigByType = (type: string) => {
-  return componentConfig.find(item => item.type === type)
+  return componentConfig.find(item => {
+    return item.type === type
+  })!.component
 }
