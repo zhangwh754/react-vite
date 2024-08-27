@@ -6,6 +6,7 @@
 
   .left {
     margin: 0 12px;
+    padding: 12px;
     width: 265px;
     background-color: #fff;
     border-radius: 4px;
@@ -36,12 +37,17 @@
         &:hover {
           border-color: #ccc;
         }
+
+        &.selected {
+          border-color: #5dade2;
+        }
       }
     }
   }
 
   .right {
     margin: 0 12px;
+    padding: 12px;
     width: 300px;
     background-color: #fff;
     border-radius: 4px;

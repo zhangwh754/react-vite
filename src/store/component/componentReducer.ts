@@ -10,10 +10,12 @@ type ComponentType = {
 }
 
 export interface ComponentState {
+  selectedComponentId: string
   componentsList: ComponentType[]
 }
 
 const initialState: ComponentState = {
+  selectedComponentId: '',
   componentsList: [],
 }
 
@@ -21,13 +23,16 @@ export const componentSlice = createSlice({
   name: 'component',
   initialState,
   reducers: {
-    setComponentsListReducer: (state: ComponentState, action: PayloadAction<ComponentState>) => {
+    setComponentsStateReducer: (state: ComponentState, action: PayloadAction<ComponentState>) => {
       return action.payload
+    },
+    setSelectedComponentId: (state: ComponentState, action: PayloadAction<string>) => {
+      return { ...state, selectedComponentId: action.payload }
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setComponentsListReducer } = componentSlice.actions
+export const { setComponentsStateReducer, setSelectedComponentId } = componentSlice.actions
 
 export default componentSlice.reducer

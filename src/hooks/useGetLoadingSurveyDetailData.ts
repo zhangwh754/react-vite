@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useRequest } from 'ahooks'
 import { getSurveyDetailData } from '@/network'
 import { useDispatch } from 'react-redux'
-import { setComponentsListReducer } from '@/store/component/componentReducer'
+import { setComponentsStateReducer } from '@/store/component/componentReducer'
 
 export default function useGetLoadingSurveyDetailData() {
   const { id } = useParams()
@@ -12,7 +12,7 @@ export default function useGetLoadingSurveyDetailData() {
     onSuccess(data) {
       const { componentsList } = data
 
-      dispatch(setComponentsListReducer({ componentsList }))
+      dispatch(setComponentsStateReducer({ componentsList, selectedComponentId: '' }))
     },
   })
   const dispatch = useDispatch()

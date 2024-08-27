@@ -1,15 +1,25 @@
 import React, { FC } from 'react'
+import { useDispatch } from 'react-redux'
 import { Spin } from 'antd'
 import styles from './style.module.scss'
 import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
 import { getComponentConfigByType } from '@/components/SurveyComponent'
+import EditProps from '../EditProps'
+import { setSelectedComponentId } from '@/store/component/componentReducer'
+import classNames from 'classnames'
 
 type PropTypes = {
   loading: boolean
 }
 
 const Content: FC<PropTypes> = ({ loading }) => {
-  const { componentsList } = useGetSurveyDetailInfo()
+  const dispatch = useDispatch()
+
+  const { componentsList, selectedComponentId } = useGetSurveyDetailInfo()
+
+  const onComponentClick = (id: string) => {
+    dispatch(setSelectedComponentId(id))
+  }
 
   return (
     <>
@@ -24,12 +34,21 @@ const Content: FC<PropTypes> = ({ loading }) => {
           ) : (
             <div className={styles['canvas-container']}>
               {componentsList.map(item => {
-                const { id, componentType } = item
+                const { id, componentType, props } = item
+
+                const Component = getComponentConfigByType(componentType)
 
                 return (
-                  <div key={id} className={styles['canvas-row']}>
+                  <div
+                    key={id}
+                    className={classNames({
+                      [`${styles['canvas-row']}`]: true,
+                      [`${styles.selected}`]: id === selectedComponentId,
+                    })}
+                    onClick={() => onComponentClick(id)}
+                  >
                     <div className={styles['canvas-item']}>
-                      {getComponentConfigByType(componentType)(item.props)}
+                      <Component {...props}></Component>
                     </div>
                   </div>
                 )
@@ -38,7 +57,9 @@ const Content: FC<PropTypes> = ({ loading }) => {
           )}
         </div>
 
-        <div className={styles.right}></div>
+        <div className={styles.right}>
+          <EditProps></EditProps>
+        </div>
       </div>
     </>
   )
