@@ -36,7 +36,7 @@ const Content: FC<PropTypes> = ({ loading }) => {
               {componentsList.map(item => {
                 const { id, componentType, props } = item
 
-                const Component = getComponentConfigByType(componentType)
+                const { Component } = getComponentConfigByType(componentType)!
 
                 return (
                   <div

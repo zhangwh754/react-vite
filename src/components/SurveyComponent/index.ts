@@ -7,7 +7,8 @@ export type ComponentPropsType = SurveyTitleProps | SurveyInputProps
 export type ComponentConfigType = {
   title: string
   type: string
-  component: FC<ComponentPropsType>
+  Component: FC<ComponentPropsType>
+  PropView: FC<ComponentPropsType>
   defaultProps: ComponentPropsType
 }
 
@@ -20,5 +21,5 @@ export const componentConfig: ComponentConfigType[] = [SurveyTitleConfig, Survey
 export const getComponentConfigByType = (type: string) => {
   return componentConfig.find(item => {
     return item.type === type
-  })!.component
+  })!
 }
