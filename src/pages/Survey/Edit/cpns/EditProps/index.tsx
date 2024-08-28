@@ -3,11 +3,13 @@ import { Tabs, TabsProps, Space, Typography } from 'antd'
 import { FormOutlined, SettingOutlined } from '@ant-design/icons'
 import styles from './style.module.scss'
 import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
-import { getComponentConfigByType } from '@/components/SurveyComponent'
-
-type PropTypes = {}
+import { ComponentPropsType, getComponentConfigByType } from '@/components/SurveyComponent'
+import { useDispatch } from 'react-redux'
+import { setSelectedComponentProps } from '@/store/component/componentReducer'
 
 const { Title } = Typography
+
+type PropTypes = {}
 
 const NullProps: FC = () => {
   return (
@@ -18,7 +20,9 @@ const NullProps: FC = () => {
 }
 
 const ComponentProp: FC = () => {
-  const { selectedComponent } = useGetSurveyDetailInfo()
+  const dispatch = useDispatch()
+
+  const { selectedComponent, selectedComponentId } = useGetSurveyDetailInfo()
 
   if (!selectedComponent) return <NullProps />
 
@@ -26,7 +30,11 @@ const ComponentProp: FC = () => {
 
   const { PropView } = getComponentConfigByType(componentType)
 
-  return <PropView {...props}></PropView>
+  const onPropViewChange = (props: ComponentPropsType) => {
+    dispatch(setSelectedComponentProps({ id: selectedComponentId, props: props }))
+  }
+
+  return <PropView {...props} onChange={onPropViewChange}></PropView>
 }
 
 const EditProps: FC<PropTypes> = () => {

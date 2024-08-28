@@ -29,10 +29,25 @@ export const componentSlice = createSlice({
     setSelectedComponentId: (state: ComponentState, action: PayloadAction<string>) => {
       return { ...state, selectedComponentId: action.payload }
     },
+    setSelectedComponentProps: (
+      state: ComponentState,
+      action: PayloadAction<{ props: ComponentPropsType; id: string }>
+    ) => {
+      return {
+        ...state,
+        componentsList: state.componentsList.map(c => {
+          if (c.id === action.payload.id) {
+            return { ...c, props: { ...c.props, ...action.payload.props } }
+          }
+          return c
+        }),
+      }
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setComponentsStateReducer, setSelectedComponentId } = componentSlice.actions
+export const { setComponentsStateReducer, setSelectedComponentId, setSelectedComponentProps } =
+  componentSlice.actions
 
 export default componentSlice.reducer
