@@ -23,3 +23,18 @@ export const getComponentConfigByType = (type: string) => {
     return item.type === type
   })!
 }
+
+export const componentListSortByType = [
+  {
+    id: '1',
+    type: 'display',
+    title: '展示组件',
+    components: [SurveyTitleConfig],
+  },
+  {
+    id: '2',
+    type: 'input',
+    title: '输入组件',
+    components: [SurveyInputConfig],
+  },
+]

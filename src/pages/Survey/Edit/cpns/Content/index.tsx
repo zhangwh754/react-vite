@@ -7,6 +7,7 @@ import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
 import { getComponentConfigByType } from '@/components/SurveyComponent'
 import EditProps from '../EditProps'
 import { setSelectedComponentId } from '@/store/component/componentReducer'
+import SurveyComponentList from '../SurveyComponentList'
 
 type PropTypes = {
   loading: boolean
@@ -26,7 +27,9 @@ const Content: FC<PropTypes> = ({ loading }) => {
   return (
     <>
       <div className={styles.wrapper}>
-        <div className={styles.left}></div>
+        <div className={styles.left}>
+          <SurveyComponentList></SurveyComponentList>
+        </div>
 
         <div className={styles.middle} onClick={() => dispatch(setSelectedComponentId(''))}>
           {loading ? (
