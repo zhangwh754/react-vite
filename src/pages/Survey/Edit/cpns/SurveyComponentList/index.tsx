@@ -1,8 +1,11 @@
 import React, { FC } from 'react'
 import { Space, Tabs, TabsProps, Typography } from 'antd'
+import { useDispatch } from 'react-redux'
 import { BarsOutlined, MenuOutlined } from '@ant-design/icons'
-import { componentListSortByType } from '@/components/SurveyComponent'
+import { ComponentConfigType, componentListSortByType } from '@/components/SurveyComponent'
 import styles from './style.module.scss'
+import { setAppendNewComponent } from '@/store/component/componentReducer'
+import { nanoid } from 'nanoid'
 
 type PropTypes = {}
 
@@ -29,7 +32,11 @@ const SurveyComponentList: FC<PropTypes> = () => {
               const { Component, defaultProps, type } = c
 
               return (
-                <div key={type} className={styles['canvas-row']}>
+                <div
+                  key={type}
+                  className={styles['canvas-row']}
+                  onClick={() => onAppendNewComponent(c)}
+                >
                   <div className={styles['canvas-item']}>
                     <Component {...defaultProps}></Component>
                   </div>
@@ -51,6 +58,19 @@ const SurveyComponentList: FC<PropTypes> = () => {
       children: 'Content of Tab Pane 2',
     },
   ]
+
+  const dispatch = useDispatch()
+
+  const onAppendNewComponent = (component: ComponentConfigType) => {
+    dispatch(
+      setAppendNewComponent({
+        id: nanoid(),
+        title: `输入框`,
+        componentType: component.type,
+        props: component.defaultProps,
+      })
+    )
+  }
 
   return (
     <>

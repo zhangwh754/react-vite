@@ -5,7 +5,7 @@ import { ComponentPropsType } from '@/components/SurveyComponent'
 type ComponentType = {
   id: string
   title: string
-  componentType: 'surveyTitle' | 'surveyInput'
+  componentType: string
   props: ComponentPropsType
 }
 
@@ -43,11 +43,51 @@ export const componentSlice = createSlice({
         }),
       }
     },
+    setAppendNewComponent: (state: ComponentState, action: PayloadAction<ComponentType>) => {
+      const { selectedComponentId } = state
+
+      const randomId = Math.random().toString(32).slice(4, 7)
+
+      if (!selectedComponentId) {
+        return {
+          ...state,
+          componentsList: state.componentsList.concat({
+            ...action.payload,
+            title: action.payload.title + randomId,
+          }),
+        }
+      }
+
+      const index = state.componentsList.findIndex(c => c.id === selectedComponentId)
+
+      if (index < 0) {
+        return {
+          ...state,
+          componentsList: state.componentsList.concat({
+            ...action.payload,
+            title: action.payload.title + randomId,
+          }),
+        }
+      }
+
+      const newComponentsList = [...state.componentsList]
+
+      newComponentsList.splice(index + 1, 0, {
+        ...action.payload,
+        title: action.payload.title + randomId,
+      })
+
+      return { ...state, componentsList: newComponentsList }
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setComponentsStateReducer, setSelectedComponentId, setSelectedComponentProps } =
-  componentSlice.actions
+export const {
+  setComponentsStateReducer,
+  setSelectedComponentId,
+  setSelectedComponentProps,
+  setAppendNewComponent,
+} = componentSlice.actions
 
 export default componentSlice.reducer
