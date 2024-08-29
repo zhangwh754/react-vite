@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
-import Header from './cpns/Header'
 import styles from './style.module.scss'
 import useGetLoadingSurveyDetailData from '@/hooks/useGetLoadingSurveyDetailData'
 import SurveyComponentList from './cpns/SurveyComponentList'
 import { setSelectedComponentId } from '@/store/component/componentReducer'
 import EditProps from './cpns/EditProps'
 import EditCanvas from './cpns/EditCanvas'
+import EditHeader from './cpns/EditHeader'
 
 type PropTypes = {}
 
@@ -17,7 +17,7 @@ const Edit: FC<PropTypes> = () => {
 
   return (
     <div className={styles.wrapper}>
-      <Header></Header>
+      <EditHeader></EditHeader>
 
       <div className={styles.container}>
         <div className={styles.left}>
