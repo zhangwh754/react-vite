@@ -1,12 +1,12 @@
-import React, { FC } from 'react'
+import React, { FC, MouseEvent } from 'react'
 import { useDispatch } from 'react-redux'
 import { Spin } from 'antd'
+import classNames from 'classnames'
 import styles from './style.module.scss'
 import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
 import { getComponentConfigByType } from '@/components/SurveyComponent'
 import EditProps from '../EditProps'
 import { setSelectedComponentId } from '@/store/component/componentReducer'
-import classNames from 'classnames'
 
 type PropTypes = {
   loading: boolean
@@ -17,7 +17,9 @@ const Content: FC<PropTypes> = ({ loading }) => {
 
   const { componentsList, selectedComponentId } = useGetSurveyDetailInfo()
 
-  const onComponentClick = (id: string) => {
+  const onComponentClick = (e: MouseEvent, id: string) => {
+    e.stopPropagation()
+
     dispatch(setSelectedComponentId(id))
   }
 
@@ -26,7 +28,7 @@ const Content: FC<PropTypes> = ({ loading }) => {
       <div className={styles.wrapper}>
         <div className={styles.left}></div>
 
-        <div className={styles.middle}>
+        <div className={styles.middle} onClick={() => dispatch(setSelectedComponentId(''))}>
           {loading ? (
             <div style={{ textAlign: 'center' }}>
               <Spin></Spin>
@@ -45,7 +47,7 @@ const Content: FC<PropTypes> = ({ loading }) => {
                       [`${styles['canvas-row']}`]: true,
                       [`${styles.selected}`]: id === selectedComponentId,
                     })}
-                    onClick={() => onComponentClick(id)}
+                    onClick={e => onComponentClick(e, id)}
                   >
                     <div className={styles['canvas-item']}>
                       <Component {...props}></Component>

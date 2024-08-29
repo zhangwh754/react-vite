@@ -12,7 +12,13 @@ export default function useGetLoadingSurveyDetailData() {
     onSuccess(data) {
       const { componentsList } = data
 
-      dispatch(setComponentsStateReducer({ componentsList, selectedComponentId: '' }))
+      let selectedComponentId
+
+      if (componentsList.length && componentsList.length > 0) {
+        selectedComponentId = componentsList[0].id
+      }
+
+      dispatch(setComponentsStateReducer({ componentsList, selectedComponentId }))
     },
   })
   const dispatch = useDispatch()
