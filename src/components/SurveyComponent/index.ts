@@ -34,7 +34,7 @@ export const componentListSortByType = [
     id: '1',
     type: 'display',
     title: '展示组件',
-    components: [SurveyTitleConfig, SurveyInfoConfig],
+    components: [SurveyInfoConfig, SurveyTitleConfig],
   },
   {
     id: '2',

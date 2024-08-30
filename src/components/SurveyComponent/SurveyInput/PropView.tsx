@@ -1,5 +1,5 @@
-import { Form, Input } from 'antd'
 import React, { FC, useEffect } from 'react'
+import { Form, Input } from 'antd'
 import { SurveyInputProps } from './interface'
 
 const PropView: FC<SurveyInputProps> = prop => {
@@ -9,22 +9,11 @@ const PropView: FC<SurveyInputProps> = prop => {
 
   useEffect(() => {
     form.setFieldsValue({ title, placeholder })
-  }, [title, placeholder])
+  }, [title, placeholder, form])
 
-  const onAllFieldChange = (allFields: any[]) => {
-    const values = allFields.map(item => {
-      const name = item.name[0] as keyof SurveyInputProps
-      const value = item.value
-
-      return { name, value }
-    })
-
-    const componentProps: SurveyInputProps = {}
-
-    values.forEach(item => (componentProps[item.name] = item.value))
-
+  const onAllFieldChange = () => {
     if (onChange) {
-      onChange(componentProps)
+      onChange(form.getFieldsValue())
     }
   }
 
@@ -35,9 +24,7 @@ const PropView: FC<SurveyInputProps> = prop => {
         form={form}
         labelAlign="left"
         autoComplete="off"
-        onFieldsChange={(_, allFields) => {
-          onAllFieldChange(allFields)
-        }}
+        onFieldsChange={onAllFieldChange}
       >
         <Form.Item label="标题" name="title" rules={[{ required: true, message: '请输入用户名' }]}>
           <Input />
