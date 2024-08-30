@@ -9,7 +9,7 @@ const SurveyTitle: FC<SurveyTitleProps> = props => {
 
   return (
     <>
-      <Title level={level} style={{ textAlign: isCenter ? 'center' : 'start', marginBottom: 0 }}>
+      <Title level={level} style={{ textAlign: isCenter ? 'center' : 'start', margin: 0 }}>
         {title}
       </Title>
     </>
