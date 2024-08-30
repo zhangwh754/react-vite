@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, MouseEvent } from 'react'
 import { Button, Space, Tabs, TabsProps, Typography } from 'antd'
 import { useDispatch } from 'react-redux'
 import {
@@ -74,7 +74,9 @@ const ConfigComponentList: FC<{ componentsList: ComponentType[]; selectedCompone
 }) => {
   const dispatch = useDispatch()
 
-  const onToggleLock = (id: string, isLock: boolean) => {
+  const onToggleLock = (e: MouseEvent, id: string, isLock: boolean) => {
+    e.stopPropagation()
+
     dispatch(setComponentLockStatus({ id, isLock }))
   }
   // const onToggleHide = (id, isHide) => {}
@@ -100,7 +102,7 @@ const ConfigComponentList: FC<{ componentsList: ComponentType[]; selectedCompone
               shape="circle"
               size="small"
               icon={isLock ? <UnlockOutlined /> : <LockOutlined />}
-              onClick={() => onToggleLock(id, !isLock)}
+              onClick={e => onToggleLock(e, id, !isLock)}
             />
             <Button
               shape="circle"
