@@ -2,10 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { ComponentPropsType } from '@/components/SurveyComponent'
 
-type ComponentType = {
+export type ComponentType = {
   id: string
   title: string
   componentType: string
+  isLock?: boolean
+  isHide?: boolean
   props: ComponentPropsType
 }
 
@@ -79,6 +81,16 @@ export const componentSlice = createSlice({
 
       return { ...state, componentsList: newComponentsList }
     },
+    setComponentLockStatus: (
+      state: ComponentState,
+      action: PayloadAction<{ id: string; isLock: boolean }>
+    ) => {
+      const component = state.componentsList.find(item => item.id === action.payload.id)
+
+      if (!component) return
+
+      component.isLock = action.payload.isLock
+    },
   },
 })
 
@@ -88,6 +100,7 @@ export const {
   setSelectedComponentId,
   setSelectedComponentProps,
   setAppendNewComponent,
+  setComponentLockStatus,
 } = componentSlice.actions
 
 export default componentSlice.reducer

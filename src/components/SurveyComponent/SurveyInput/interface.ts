@@ -1,6 +1,7 @@
 export type SurveyInputProps = {
   title?: string
   placeholder?: string
+  lock?: boolean
   onChange?: (prop: SurveyInputProps) => void
 }
 

@@ -3,7 +3,7 @@ import { Form, Input, Switch } from 'antd'
 import { SurveyInfoProps } from './interface'
 
 const PropView: FC<SurveyInfoProps> = prop => {
-  const { title, isCenter, desc, onChange } = prop
+  const { title, isCenter, desc, onChange, lock } = prop
 
   const [form] = Form.useForm()
 
@@ -19,7 +19,13 @@ const PropView: FC<SurveyInfoProps> = prop => {
 
   return (
     <>
-      <Form layout="vertical" form={form} autoComplete="off" onFieldsChange={onAllFieldChange}>
+      <Form
+        layout="vertical"
+        form={form}
+        autoComplete="off"
+        disabled={lock}
+        onFieldsChange={onAllFieldChange}
+      >
         <Form.Item label="标题" name="title" rules={[{ required: true, message: '请输入标题' }]}>
           <Input />
         </Form.Item>

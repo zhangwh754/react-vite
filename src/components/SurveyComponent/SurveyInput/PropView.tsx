@@ -3,7 +3,7 @@ import { Form, Input } from 'antd'
 import { SurveyInputProps } from './interface'
 
 const PropView: FC<SurveyInputProps> = prop => {
-  const { title, placeholder, onChange } = prop
+  const { title, placeholder, onChange, lock } = prop
 
   const [form] = Form.useForm()
 
@@ -24,6 +24,7 @@ const PropView: FC<SurveyInputProps> = prop => {
         form={form}
         labelAlign="left"
         autoComplete="off"
+        disabled={lock}
         onFieldsChange={onAllFieldChange}
       >
         <Form.Item label="标题" name="title" rules={[{ required: true, message: '请输入用户名' }]}>
