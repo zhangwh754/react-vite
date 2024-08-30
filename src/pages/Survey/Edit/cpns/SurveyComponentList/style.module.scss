@@ -14,3 +14,25 @@
     border-color: #b3b6b7;
   }
 }
+
+.component-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 4px;
+  padding: 8px;
+  border: 1px solid #e5e7e9;
+
+  &:nth-of-type(1) {
+    margin-top: 0;
+  }
+
+  .component-name {
+    flex: 1;
+    @include overflow(1);
+  }
+
+  .component-buttons {
+    @include overflow(1);
+  }
+}

@@ -1,17 +1,20 @@
 import React, { FC } from 'react'
-import { Space, Tabs, TabsProps, Typography } from 'antd'
+import { Button, Space, Tabs, TabsProps, Typography } from 'antd'
 import { useDispatch } from 'react-redux'
-import { BarsOutlined, MenuOutlined } from '@ant-design/icons'
+import { BarsOutlined, EyeInvisibleOutlined, LockOutlined, MenuOutlined } from '@ant-design/icons'
 import { ComponentConfigType, componentListSortByType } from '@/components/SurveyComponent'
 import styles from './style.module.scss'
 import { setAppendNewComponent } from '@/store/component/componentReducer'
 import { nanoid } from 'nanoid'
+import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
 
 type PropTypes = {}
 
 const { Title } = Typography
 
 const SurveyComponentList: FC<PropTypes> = () => {
+  const { componentsList } = useGetSurveyDetailInfo()
+
   const items: TabsProps['items'] = [
     {
       key: 'propsConfig',
@@ -55,7 +58,19 @@ const SurveyComponentList: FC<PropTypes> = () => {
           图层
         </Space>
       ),
-      children: 'Content of Tab Pane 2',
+      children: componentsList.map(item => {
+        return (
+          <div className={styles['component-row']} key={item.id}>
+            <div className={styles['component-name']}>{item.title}</div>
+            <div className={styles['component-buttons']}>
+              <Space>
+                <Button shape="circle" size="small" icon={<LockOutlined />} />
+                <Button shape="circle" size="small" icon={<EyeInvisibleOutlined />} />
+              </Space>
+            </div>
+          </div>
+        )
+      }),
     },
   ]
 
@@ -65,7 +80,7 @@ const SurveyComponentList: FC<PropTypes> = () => {
     dispatch(
       setAppendNewComponent({
         id: nanoid(),
-        title: `输入框`,
+        title: component.title,
         componentType: component.type,
         props: component.defaultProps,
       })
