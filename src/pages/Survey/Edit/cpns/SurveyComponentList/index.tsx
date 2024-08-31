@@ -156,7 +156,7 @@ const SurveyComponentList: FC<PropTypes> = () => {
 
   return (
     <>
-      <Tabs defaultActiveKey="pageConfig" items={items} />
+      <Tabs defaultActiveKey="propsConfig" items={items} />
     </>
   )
 }

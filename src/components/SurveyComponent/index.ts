@@ -3,12 +3,14 @@ import SurveyTitleConfig, { SurveyTitleProps } from './SurveyTitle'
 import SurveyInputConfig, { SurveyInputProps } from './SurveyInput'
 import SurveyInfoConfig, { SurveyInfoProps } from './SurveyInfo'
 import SurveyParagraphConfig, { SurveyParagraphProps } from './SurveyParagraph'
+import SurveyRadioConfig, { SurveyRadioProps } from './SurveyRadio'
 
 export type ComponentPropsType =
   | SurveyTitleProps
   | SurveyInfoProps
   | SurveyInputProps
   | SurveyParagraphProps
+  | SurveyRadioProps
 
 export type ComponentConfigType = {
   title: string
@@ -23,6 +25,7 @@ export const componentConfig: ComponentConfigType[] = [
   SurveyInfoConfig,
   SurveyInputConfig,
   SurveyParagraphConfig,
+  SurveyRadioConfig,
 ]
 
 /**
@@ -47,5 +50,11 @@ export const componentListSortByType = [
     type: 'input',
     title: '输入组件',
     components: [SurveyInputConfig],
+  },
+  {
+    id: '3',
+    type: 'choose',
+    title: '选择组件',
+    components: [SurveyRadioConfig],
   },
 ]
