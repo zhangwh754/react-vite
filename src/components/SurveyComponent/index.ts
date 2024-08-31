@@ -1,9 +1,14 @@
+import { FC } from 'react'
 import SurveyTitleConfig, { SurveyTitleProps } from './SurveyTitle'
 import SurveyInputConfig, { SurveyInputProps } from './SurveyInput'
 import SurveyInfoConfig, { SurveyInfoProps } from './SurveyInfo'
-import { FC } from 'react'
+import SurveyParagraphConfig, { SurveyParagraphProps } from './SurveyParagarph'
 
-export type ComponentPropsType = SurveyTitleProps | SurveyInfoProps | SurveyInputProps
+export type ComponentPropsType =
+  | SurveyTitleProps
+  | SurveyInfoProps
+  | SurveyInputProps
+  | SurveyParagraphProps
 
 export type ComponentConfigType = {
   title: string
@@ -17,6 +22,7 @@ export const componentConfig: ComponentConfigType[] = [
   SurveyTitleConfig,
   SurveyInfoConfig,
   SurveyInputConfig,
+  SurveyParagraphConfig,
 ]
 
 /**
@@ -34,7 +40,7 @@ export const componentListSortByType = [
     id: '1',
     type: 'display',
     title: '展示组件',
-    components: [SurveyInfoConfig, SurveyTitleConfig],
+    components: [SurveyInfoConfig, SurveyTitleConfig, SurveyParagraphConfig],
   },
   {
     id: '2',
