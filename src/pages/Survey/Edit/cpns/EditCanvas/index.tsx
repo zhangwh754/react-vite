@@ -33,24 +33,26 @@ const EditCanvas: FC<PropTypes> = props => {
       ) : (
         <div className={styles['canvas-container']}>
           {componentsList.map(item => {
-            const { id, componentType, props, isLock } = item
+            const { id, componentType, props, isLock, isHide } = item
 
             const { Component } = getComponentConfigByType(componentType)
 
             return (
-              <div
-                key={id}
-                className={classNames({
-                  [`${styles['canvas-row']}`]: true,
-                  [`${styles.selected}`]: id === selectedComponentId,
-                  [`${styles.lock}`]: isLock,
-                })}
-                onClick={e => onComponentClick(e, id)}
-              >
-                <div className={styles['canvas-item']}>
-                  <Component {...props}></Component>
+              !isHide && (
+                <div
+                  key={id}
+                  className={classNames({
+                    [`${styles['canvas-row']}`]: true,
+                    [`${styles.selected}`]: id === selectedComponentId,
+                    [`${styles.lock}`]: isLock,
+                  })}
+                  onClick={e => onComponentClick(e, id)}
+                >
+                  <div className={styles['canvas-item']}>
+                    <Component {...props}></Component>
+                  </div>
                 </div>
-              </div>
+              )
             )
           })}
         </div>

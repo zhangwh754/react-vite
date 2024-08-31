@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { ComponentPropsType } from '@/components/SurveyComponent'
+import { getNextSelectComponentId } from './utils'
 
 export type ComponentType = {
   id: string
@@ -91,6 +92,20 @@ export const componentSlice = createSlice({
 
       component.isLock = action.payload.isLock
     },
+    setComponentHideStatus: (
+      state: ComponentState,
+      action: PayloadAction<{ id: string; isHide: boolean }>
+    ) => {
+      const component = state.componentsList.find(item => item.id === action.payload.id)
+
+      if (!component) return
+
+      component.isHide = action.payload.isHide
+
+      const newSelectComponentId = getNextSelectComponentId(state, action.payload.id)
+
+      state.selectedComponentId = newSelectComponentId
+    },
   },
 })
 
@@ -101,6 +116,7 @@ export const {
   setSelectedComponentProps,
   setAppendNewComponent,
   setComponentLockStatus,
+  setComponentHideStatus,
 } = componentSlice.actions
 
 export default componentSlice.reducer

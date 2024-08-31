@@ -14,6 +14,7 @@ import styles from './style.module.scss'
 import {
   ComponentType,
   setAppendNewComponent,
+  setComponentHideStatus,
   setComponentLockStatus,
   setSelectedComponentId,
 } from '@/store/component/componentReducer'
@@ -79,7 +80,12 @@ const ConfigComponentList: FC<{ componentsList: ComponentType[]; selectedCompone
 
     dispatch(setComponentLockStatus({ id, isLock }))
   }
-  // const onToggleHide = (id, isHide) => {}
+
+  const onToggleHide = (e: MouseEvent, id: string, isHide: boolean) => {
+    e.stopPropagation()
+
+    dispatch(setComponentHideStatus({ id, isHide }))
+  }
 
   return componentsList.map(item => {
     const { id, title, isLock, isHide } = item
@@ -108,6 +114,7 @@ const ConfigComponentList: FC<{ componentsList: ComponentType[]; selectedCompone
               shape="circle"
               size="small"
               icon={isHide ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+              onClick={e => onToggleHide(e, id, !isHide)}
             />
           </Space>
         </div>

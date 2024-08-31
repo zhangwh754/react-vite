@@ -26,7 +26,7 @@ const ComponentProp: FC = () => {
 
   if (!selectedComponent) return <NullProps />
 
-  const { componentType, props, isLock } = selectedComponent
+  const { componentType, props, isLock, isHide } = selectedComponent
 
   const { PropView } = getComponentConfigByType(componentType)
 
@@ -34,7 +34,7 @@ const ComponentProp: FC = () => {
     dispatch(setSelectedComponentProps({ id: selectedComponentId, props: props }))
   }
 
-  return <PropView {...props} lock={isLock} onChange={onPropViewChange}></PropView>
+  return <PropView {...props} lock={isLock || isHide} onChange={onPropViewChange}></PropView>
 }
 
 const EditProps: FC<PropTypes> = () => {
