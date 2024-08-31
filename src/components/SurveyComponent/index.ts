@@ -14,21 +14,21 @@ export type ComponentPropsType =
   | SurveyRadioProps
   | SurveyCheckboxProps
 
-export type ComponentConfigType = {
+export type ComponentConfigType<T> = {
   title: string
   type: string
   Component: FC<ComponentPropsType>
   PropView: FC<ComponentPropsType>
-  defaultProps: ComponentPropsType
+  defaultProps: T
 }
 
-export const componentConfig: ComponentConfigType[] = [
+export const componentConfig: ComponentConfigType<ComponentPropsType>[] = [
   SurveyTitleConfig,
   SurveyInfoConfig,
   SurveyInputConfig,
   SurveyParagraphConfig,
-  SurveyRadioConfig,
-  SurveyCheckboxConfig,
+  SurveyRadioConfig as ComponentConfigType<SurveyRadioProps>,
+  SurveyCheckboxConfig as ComponentConfigType<SurveyCheckboxProps>,
 ]
 
 /**
