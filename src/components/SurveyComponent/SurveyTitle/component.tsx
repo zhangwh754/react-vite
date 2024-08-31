@@ -1,5 +1,5 @@
 import { Typography } from 'antd'
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { defaultTitleProps, type SurveyTitleProps } from './interface'
 
 const { Title } = Typography

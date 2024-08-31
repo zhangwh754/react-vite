@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Pagination } from 'antd'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { SEARCH_PAGE, SEARCH_PAGESIZE } from '@/constant'

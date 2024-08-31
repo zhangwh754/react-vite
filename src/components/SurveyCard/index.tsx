@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, Space, Divider, Tag, message } from 'antd'
 import { EditOutlined, BarChartOutlined, StarOutlined, DeleteOutlined } from '@ant-design/icons'

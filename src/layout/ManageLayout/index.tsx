@@ -1,4 +1,4 @@
-import React, { FC, Suspense } from 'react'
+import { FC, Suspense } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { Space, Button, Divider, Skeleton } from 'antd'
 import { BarChartOutlined, DeleteOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons'

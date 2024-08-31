@@ -1,4 +1,4 @@
-import React, { FC, Suspense } from 'react'
+import { FC, Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Skeleton } from 'antd'
 import dayjs from 'dayjs'

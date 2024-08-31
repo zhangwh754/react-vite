@@ -1,5 +1,5 @@
 import { Empty, Result, Spin } from 'antd'
-import React, { FC } from 'react'
+import { FC } from 'react'
 
 type PropTypes = {
   loading: boolean

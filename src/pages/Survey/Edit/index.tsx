@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from './style.module.scss'
 import useGetLoadingSurveyDetailData from '@/hooks/useGetLoadingSurveyDetailData'
@@ -11,7 +11,7 @@ import EditHeader from './cpns/EditHeader'
 type PropTypes = {}
 
 const Edit: FC<PropTypes> = () => {
-  const { loading, error } = useGetLoadingSurveyDetailData()
+  const { loading } = useGetLoadingSurveyDetailData()
 
   const dispatch = useDispatch()
 

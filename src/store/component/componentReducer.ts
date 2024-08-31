@@ -26,7 +26,7 @@ export const componentSlice = createSlice({
   name: 'component',
   initialState,
   reducers: {
-    setComponentsStateReducer: (state: ComponentState, action: PayloadAction<ComponentState>) => {
+    setComponentsStateReducer: (_state: ComponentState, action: PayloadAction<ComponentState>) => {
       return action.payload
     },
     setSelectedComponentId: (state: ComponentState, action: PayloadAction<string>) => {

@@ -1,7 +1,6 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Tabs, TabsProps, Space, Typography } from 'antd'
 import { FormOutlined, SettingOutlined } from '@ant-design/icons'
-import styles from './style.module.scss'
 import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
 import { ComponentPropsType, getComponentConfigByType } from '@/components/SurveyComponent'
 import { useDispatch } from 'react-redux'

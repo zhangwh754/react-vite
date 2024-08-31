@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Input, Typography } from 'antd'
 import { defaultInputProps, type SurveyInputProps } from './interface'
 

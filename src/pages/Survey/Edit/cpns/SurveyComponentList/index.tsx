@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent } from 'react'
+import { FC, MouseEvent } from 'react'
 import { Button, Space, Tabs, TabsProps, Typography } from 'antd'
 import { useDispatch } from 'react-redux'
 import {
