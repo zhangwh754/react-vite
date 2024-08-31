@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { cloneDeep } from 'lodash-es'
 import { ComponentPropsType } from '@/components/SurveyComponent'
 import { getNextSelectComponentId } from './utils'
+import { nanoid } from 'nanoid'
 
 export type ComponentType = {
   id: string
@@ -15,11 +17,13 @@ export type ComponentType = {
 export interface ComponentState {
   selectedComponentId: string
   componentsList: ComponentType[]
+  copiedComponentData: null | ComponentType
 }
 
 const initialState: ComponentState = {
   selectedComponentId: '',
   componentsList: [],
+  copiedComponentData: null,
 }
 
 export const componentSlice = createSlice({
@@ -106,6 +110,50 @@ export const componentSlice = createSlice({
 
       state.selectedComponentId = newSelectComponentId
     },
+    setComponentDelete: (state: ComponentState) => {
+      const { selectedComponentId, componentsList } = state
+
+      const index = componentsList.findIndex(item => item.id === selectedComponentId)
+
+      if (index < 0) return
+
+      // 先隐藏方便获取下一个组件的id
+      componentsList[index].isHide = true
+
+      const newSelectComponentId = getNextSelectComponentId(state, selectedComponentId)
+
+      state.selectedComponentId = newSelectComponentId
+
+      componentsList.splice(index, 1)
+    },
+    setComponentCopy: (state: ComponentState) => {
+      const { selectedComponentId, componentsList } = state
+
+      const selectComponent = componentsList.find(item => item.id === selectedComponentId)
+
+      if (!selectComponent) return
+
+      state.copiedComponentData = selectComponent
+    },
+    setComponentPaste: (state: ComponentState) => {
+      const { selectedComponentId, componentsList, copiedComponentData } = state
+
+      if (!copiedComponentData) return
+
+      const _component = cloneDeep(copiedComponentData)
+
+      _component.id = nanoid()
+
+      if (!selectedComponentId) {
+        componentsList.push(_component)
+      }
+
+      const index = componentsList.findIndex(item => item.id === selectedComponentId)
+
+      if (index < 0) return
+
+      componentsList.splice(index + 1, 0, _component)
+    },
   },
 })
 
@@ -117,6 +165,9 @@ export const {
   setAppendNewComponent,
   setComponentLockStatus,
   setComponentHideStatus,
+  setComponentDelete,
+  setComponentCopy,
+  setComponentPaste,
 } = componentSlice.actions
 
 export default componentSlice.reducer

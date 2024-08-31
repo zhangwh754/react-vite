@@ -18,7 +18,13 @@ export default function useGetLoadingSurveyDetailData() {
         selectedComponentId = componentsList[0].id
       }
 
-      dispatch(setComponentsStateReducer({ componentsList, selectedComponentId }))
+      dispatch(
+        setComponentsStateReducer({
+          componentsList,
+          selectedComponentId,
+          copiedComponentData: null,
+        })
+      )
     },
   })
   const dispatch = useDispatch()
