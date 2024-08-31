@@ -1,13 +1,13 @@
 .header {
   padding: 0 12px;
   display: flex;
+  align-items: center;
   height: 48px;
   background-color: #fff;
 
   .left {
     width: 400px;
     display: flex;
-    align-items: center;
 
     .back {
       cursor: pointer;
@@ -24,8 +24,12 @@
   }
   .middle {
     flex: 1;
+    display: flex;
+    justify-content: center;
   }
   .right {
+    display: flex;
+    justify-content: flex-end;
     width: 400px;
   }
 }
