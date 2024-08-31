@@ -2,7 +2,7 @@ import { FC } from 'react'
 import SurveyTitleConfig, { SurveyTitleProps } from './SurveyTitle'
 import SurveyInputConfig, { SurveyInputProps } from './SurveyInput'
 import SurveyInfoConfig, { SurveyInfoProps } from './SurveyInfo'
-import SurveyParagraphConfig, { SurveyParagraphProps } from './SurveyParagarph'
+import SurveyParagraphConfig, { SurveyParagraphProps } from './SurveyParagraph'
 
 export type ComponentPropsType =
   | SurveyTitleProps
