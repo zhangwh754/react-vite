@@ -9,7 +9,7 @@ const SurveyInput: FC<SurveyInputProps> = props => {
 
   return (
     <>
-      <Paragraph>{title}</Paragraph>
+      <Paragraph strong>{title}</Paragraph>
       <Input placeholder={placeholder}></Input>
     </>
   )
