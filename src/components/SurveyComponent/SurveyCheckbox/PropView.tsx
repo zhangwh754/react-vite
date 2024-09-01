@@ -1,18 +1,18 @@
 import { FC, useEffect } from 'react'
-import { Button, Form, Input, Select, Space, Switch, Typography } from 'antd'
+import { Button, Checkbox, Form, Input, Space, Switch, Typography } from 'antd'
 import { SurveyCheckboxProps } from './interface'
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
 const { Paragraph } = Typography
 
 const PropView: FC<SurveyCheckboxProps> = prop => {
-  const { title = '', options = [], defaultValue = [], isVertical = false, onChange, lock } = prop
+  const { title = '', options = [], isVertical = false, onChange, lock } = prop
 
   const [form] = Form.useForm()
 
   useEffect(() => {
-    form.setFieldsValue({ title, options, defaultValue, isVertical })
-  }, [title, options, defaultValue, isVertical, form])
+    form.setFieldsValue({ title, options, isVertical })
+  }, [title, options, isVertical, form])
 
   const onAllFieldChange = () => {
     if (onChange) {
@@ -23,6 +23,7 @@ const PropView: FC<SurveyCheckboxProps> = prop => {
         .map(option => ({
           label: option.label,
           value: option.label,
+          checked: option.checked,
         }))
 
       onChange(values)
@@ -52,7 +53,13 @@ const PropView: FC<SurveyCheckboxProps> = prop => {
                 return (
                   <Space key={key} align="baseline">
                     <Form.Item
-                      {...field}
+                      name={[name, 'checked']}
+                      dependencies={['options']}
+                      valuePropName="checked"
+                    >
+                      <Checkbox />
+                    </Form.Item>
+                    <Form.Item
                       name={[name, 'label']}
                       dependencies={['options']}
                       rules={[
@@ -79,7 +86,7 @@ const PropView: FC<SurveyCheckboxProps> = prop => {
                       <Input />
                     </Form.Item>
 
-                    {index > 1 && <DeleteOutlined onClick={() => remove(index)} />}
+                    {index > 0 && <DeleteOutlined onClick={() => remove(index)} />}
                   </Space>
                 )
               })}
@@ -87,7 +94,7 @@ const PropView: FC<SurveyCheckboxProps> = prop => {
               <Form.Item>
                 <Button
                   type="dashed"
-                  onClick={() => add({ label: '', value: '' })}
+                  onClick={() => add({ label: '', value: '', checked: false })}
                   style={{ width: '60%' }}
                   icon={<PlusOutlined />}
                 >
@@ -97,15 +104,6 @@ const PropView: FC<SurveyCheckboxProps> = prop => {
             </>
           )}
         </Form.List>
-        <Form.Item label="默认值" name="defaultValue">
-          <Select mode="multiple" allowClear>
-            {options.map(option => (
-              <Select.Option key={option.value} value={option.value}>
-                {option.label}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
         <Form.Item label="竖向排列" name="isVertical">
           <Switch />
         </Form.Item>

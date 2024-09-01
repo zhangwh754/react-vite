@@ -5,26 +5,19 @@ import { defaultCheckboxProps, type SurveyCheckboxProps } from './interface'
 const { Paragraph } = Typography
 
 const SurveyCheckbox: FC<SurveyCheckboxProps> = props => {
-  const {
-    title,
-    isVertical,
-    options = [],
-    defaultValue = [],
-  } = { ...defaultCheckboxProps, ...props }
+  const { title, isVertical, options = [] } = { ...defaultCheckboxProps, ...props }
 
   return (
     <>
       <Paragraph strong>{title}</Paragraph>
 
-      <Checkbox.Group value={defaultValue}>
-        <Space direction={isVertical ? 'vertical' : 'horizontal'}>
-          {options.map(option => (
-            <Checkbox key={option.value} value={option.value}>
-              {option.label}
-            </Checkbox>
-          ))}
-        </Space>
-      </Checkbox.Group>
+      <Space direction={isVertical ? 'vertical' : 'horizontal'}>
+        {options.map(({ value, label, checked }) => (
+          <Checkbox key={value} value={value} checked={checked}>
+            {label}
+          </Checkbox>
+        ))}
+      </Space>
     </>
   )
 }
