@@ -9,7 +9,11 @@ import {
   MenuOutlined,
   UnlockOutlined,
 } from '@ant-design/icons'
-import { ComponentConfigType, componentListSortByType } from '@/components/SurveyComponent'
+import {
+  ComponentConfigType,
+  componentListSortByType,
+  ComponentPropsType,
+} from '@/components/SurveyComponent'
 import styles from './style.module.scss'
 import {
   ComponentType,
@@ -30,7 +34,7 @@ const { Title } = Typography
 const DisplayComponentList: FC = () => {
   const dispatch = useDispatch()
 
-  const onAppendNewComponent = (component: ComponentConfigType) => {
+  const onAppendNewComponent = (component: ComponentConfigType<ComponentPropsType>) => {
     dispatch(
       setAppendNewComponent({
         id: nanoid(),
@@ -49,13 +53,13 @@ const DisplayComponentList: FC = () => {
         </Title>
 
         {t.components.map(c => {
-          const { Component, defaultProps, type } = c
+          const { Component, defaultProps, type } = c as ComponentConfigType<ComponentPropsType>
 
           return (
             <div
               key={type}
               className={styles['canvas-row']}
-              onClick={() => onAppendNewComponent(c)}
+              onClick={() => onAppendNewComponent(c as ComponentConfigType<ComponentPropsType>)}
             >
               <div className={styles['canvas-item']}>
                 <Component {...defaultProps}></Component>
