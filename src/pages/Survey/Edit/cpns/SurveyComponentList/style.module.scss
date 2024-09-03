@@ -34,6 +34,7 @@
 
   .component-name {
     flex: 1;
+    margin-right: 16px;
     @include overflow(1);
   }
 

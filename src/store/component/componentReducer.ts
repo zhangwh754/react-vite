@@ -154,6 +154,16 @@ export const componentSlice = createSlice({
 
       componentsList.splice(index + 1, 0, _component)
     },
+    setComponentTitle: (
+      state: ComponentState,
+      action: PayloadAction<{ id: string; title: string }>
+    ) => {
+      const component = state.componentsList.find(item => item.id === action.payload.id)
+
+      if (!component) return
+
+      component.title = action.payload.title
+    },
   },
 })
 
@@ -168,6 +178,7 @@ export const {
   setComponentDelete,
   setComponentCopy,
   setComponentPaste,
+  setComponentTitle,
 } = componentSlice.actions
 
 export default componentSlice.reducer

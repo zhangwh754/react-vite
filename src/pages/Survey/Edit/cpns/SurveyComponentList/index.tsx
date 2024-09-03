@@ -1,5 +1,5 @@
-import { FC, MouseEvent } from 'react'
-import { Button, Space, Tabs, TabsProps, Typography } from 'antd'
+import { ChangeEvent, FC, MouseEvent, useState } from 'react'
+import { Button, Input, Space, Tabs, TabsProps, Typography } from 'antd'
 import { useDispatch } from 'react-redux'
 import {
   BarsOutlined,
@@ -20,6 +20,7 @@ import {
   setAppendNewComponent,
   setComponentHideStatus,
   setComponentLockStatus,
+  setComponentTitle,
   setSelectedComponentId,
 } from '@/store/component/componentReducer'
 import { nanoid } from 'nanoid'
@@ -91,6 +92,14 @@ const ConfigComponentList: FC<{ componentsList: ComponentType[]; selectedCompone
     dispatch(setComponentHideStatus({ id, isHide }))
   }
 
+  const [updateComponentId, setUpdateComponentId] = useState<string | null>(null)
+
+  const onTitleEdit = (e: ChangeEvent<HTMLInputElement>, id: string) => {
+    const title = e.target.value
+
+    dispatch(setComponentTitle({ id, title }))
+  }
+
   return componentsList.map(item => {
     const { id, title, isLock, isHide } = item
 
@@ -105,7 +114,19 @@ const ConfigComponentList: FC<{ componentsList: ComponentType[]; selectedCompone
         key={id}
         onClick={() => dispatch(setSelectedComponentId(id))}
       >
-        <div className={styles['component-name']}>{title}</div>
+        <div className={styles['component-name']} onClick={() => setUpdateComponentId(id)}>
+          {id === updateComponentId ? (
+            <Input
+              value={title}
+              autoFocus
+              onChange={e => onTitleEdit(e, id)}
+              onPressEnter={() => setUpdateComponentId(null)}
+              onBlur={() => setUpdateComponentId(null)}
+            />
+          ) : (
+            title
+          )}
+        </div>
         <div className={styles['component-buttons']}>
           <Space>
             <Button
