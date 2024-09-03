@@ -14,9 +14,9 @@ import {
   SnippetsOutlined,
   UnlockOutlined,
 } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
   setComponentCopy,
   setComponentDelete,
@@ -24,17 +24,20 @@ import {
   setComponentLockStatus,
   setComponentPaste,
 } from '@/store/component/componentReducer'
-import { RootState } from '@/store/store'
 import { setPagePropsUpdate } from '@/store/pageReducer'
+import { useRequest } from 'ahooks'
+import { saveSurveyData } from '@/network'
+import useGetPageInfo from '@/hooks/useGetPageInfo'
 
 const { Title } = Typography
 
 type PropTypes = {}
 
 const EditHeader: FC<PropTypes> = () => {
-  const { selectedComponent, selectedComponentId, copiedComponentData } = useGetSurveyDetailInfo()
+  const { selectedComponent, selectedComponentId, copiedComponentData, componentsList } =
+    useGetSurveyDetailInfo()
 
-  const { title } = useSelector((state: RootState) => state.page)
+  const { title, desc } = useGetPageInfo()
 
   const { isHide = false, isLock = false } = selectedComponent || {}
 
@@ -69,6 +72,28 @@ const EditHeader: FC<PropTypes> = () => {
     const title = e.target.value
 
     dispatch(setPagePropsUpdate({ title }))
+  }
+
+  const { run: save, loading } = useRequest(saveSurveyData, {
+    manual: true,
+    onSuccess(_, [_id, type]) {
+      if (type === 'publish') {
+        return message.success('发布成功')
+      }
+      if (type === 'save') {
+        return message.success('保存成功')
+      }
+    },
+  })
+
+  const { id = '' } = useParams()
+
+  const onPublish = () => {
+    save(id, 'publish', componentsList, { title, desc })
+  }
+
+  const onSave = () => {
+    save(id, 'save', componentsList, { title, desc })
   }
 
   return (
@@ -146,8 +171,10 @@ const EditHeader: FC<PropTypes> = () => {
         </div>
         <div className={styles.right}>
           <Space>
-            <Button icon={<CheckOutlined />}>发布</Button>
-            <Button icon={<SaveOutlined />} type="primary">
+            <Button disabled={loading} icon={<CheckOutlined />} onClick={onPublish}>
+              发布
+            </Button>
+            <Button disabled={loading} icon={<SaveOutlined />} type="primary" onClick={onSave}>
               保存
             </Button>
           </Space>

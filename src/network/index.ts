@@ -1,4 +1,7 @@
+import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
 import service from './service'
+import { PageState } from '@/store/pageReducer'
+import { ComponentType } from '@/store/component/componentReducer'
 
 export type Res = {
   [key: string]: any
@@ -67,6 +70,21 @@ export async function duplicateSurveyData(id: string): Promise<Res> {
 
 export async function deleteSurveyData(id: string): Promise<Res> {
   const res = await service.delete(`/survey/delete/${id}`)
+
+  return res
+}
+
+export async function saveSurveyData(
+  id: string,
+  type: 'save' | 'publish',
+  componentList: ComponentType[],
+  pageInfo: PageState
+): Promise<Res> {
+  const res = await service.post(`/survey/save/${id}`, {
+    type,
+    componentList: componentList,
+    pageInfo: pageInfo,
+  })
 
   return res
 }

@@ -3,10 +3,10 @@ import { Tabs, TabsProps, Space, Typography, Form, Input } from 'antd'
 import { FormOutlined, SettingOutlined } from '@ant-design/icons'
 import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
 import { ComponentPropsType, getComponentConfigByType } from '@/components/SurveyComponent'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setSelectedComponentProps } from '@/store/component/componentReducer'
-import { RootState } from '@/store/store'
 import { setPagePropsUpdate } from '@/store/pageReducer'
+import useGetPageInfo from '@/hooks/useGetPageInfo'
 
 const { Title } = Typography
 
@@ -40,7 +40,7 @@ const ComponentProp: FC = () => {
 
 const PagesConfig: FC = () => {
   const [form] = Form.useForm()
-  const { title, desc = '' } = useSelector((state: RootState) => state.page)
+  const { title, desc = '' } = useGetPageInfo()
   const dispatch = useDispatch()
 
   useEffect(() => {
