@@ -1,5 +1,5 @@
-import { FC } from 'react'
-import { Tabs, TabsProps, Space, Typography } from 'antd'
+import { FC, useEffect, useState } from 'react'
+import { Tabs, TabsProps, Space, Typography, Form, Input } from 'antd'
 import { FormOutlined, SettingOutlined } from '@ant-design/icons'
 import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
 import { ComponentPropsType, getComponentConfigByType } from '@/components/SurveyComponent'
@@ -36,7 +36,36 @@ const ComponentProp: FC = () => {
   return <PropView {...props} lock={isLock || isHide} onChange={onPropViewChange}></PropView>
 }
 
+const PagesConfig: FC = () => {
+  return (
+    <Form layout="vertical" autoComplete="off">
+      <Form.Item label="标题" name="title" rules={[{ required: true, message: '请输入标题' }]}>
+        <Input />
+      </Form.Item>
+      <Form.Item label="描述" name="desc">
+        <Input />
+      </Form.Item>
+    </Form>
+  )
+}
+
 const EditProps: FC<PropTypes> = () => {
+  const [activeKey, setActiveKey] = useState('propsConfig')
+
+  const { selectedComponentId } = useGetSurveyDetailInfo()
+
+  useEffect(() => {
+    if (!selectedComponentId) {
+      setActiveKey('pageConfig')
+    } else {
+      setActiveKey('propsConfig')
+    }
+  }, [selectedComponentId])
+
+  const onTabsChange = (val: string) => {
+    setActiveKey(val)
+  }
+
   const items: TabsProps['items'] = [
     {
       key: 'propsConfig',
@@ -56,13 +85,13 @@ const EditProps: FC<PropTypes> = () => {
           页面设置
         </Space>
       ),
-      children: 'Content of Tab Pane 2',
+      children: <PagesConfig />,
     },
   ]
 
   return (
     <>
-      <Tabs defaultActiveKey="1" items={items} />
+      <Tabs activeKey={activeKey} items={items} onChange={onTabsChange} />
     </>
   )
 }
