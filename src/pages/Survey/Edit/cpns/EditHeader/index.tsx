@@ -1,10 +1,11 @@
 import { ChangeEvent, FC, useState } from 'react'
 import styles from './style.module.scss'
-import { Button, Input, message, Space, Tooltip } from 'antd'
+import { Button, Input, message, Space, Tooltip, Typography } from 'antd'
 import {
   CheckOutlined,
   CopyOutlined,
   DeleteOutlined,
+  EditOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
   LeftOutlined,
@@ -15,7 +16,7 @@ import {
 } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   setComponentCopy,
   setComponentDelete,
@@ -23,28 +24,22 @@ import {
   setComponentLockStatus,
   setComponentPaste,
 } from '@/store/component/componentReducer'
+import { RootState } from '@/store/store'
+import { setPagePropsUpdate } from '@/store/pageReducer'
+
+const { Title } = Typography
 
 type PropTypes = {}
 
 const EditHeader: FC<PropTypes> = () => {
-  const [title, setTitle] = useState('问卷标题1')
-
   const { selectedComponent, selectedComponentId, copiedComponentData } = useGetSurveyDetailInfo()
+
+  const { title } = useSelector((state: RootState) => state.page)
 
   const { isHide = false, isLock = false } = selectedComponent || {}
 
   const nav = useNavigate()
   const dispatch = useDispatch()
-
-  const onBlur = () => {
-    console.log('currentTitle: ', title)
-  }
-
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value
-
-    setTitle(val)
-  }
 
   const onToggleLock = () => {
     dispatch(setComponentLockStatus({ id: selectedComponentId, isLock: !isLock }))
@@ -68,22 +63,41 @@ const EditHeader: FC<PropTypes> = () => {
     message.success('粘贴成功')
   }
 
+  const [isEdit, setIsEdit] = useState(false)
+
+  const onTitleEdit = (e: ChangeEvent<HTMLInputElement>) => {
+    const title = e.target.value
+
+    dispatch(setPagePropsUpdate({ title }))
+  }
+
   return (
     <>
       <div className={styles.header}>
         <div className={styles.left}>
-          <Space>
+          <Space size={'large'} align="baseline">
             <Space className={styles.back} onClick={() => nav(-1)}>
               <LeftOutlined />
               返回
             </Space>
-            <Input
-              className={styles.title}
-              variant="borderless"
-              value={title}
-              onChange={onChange}
-              onBlur={onBlur}
-            />
+            {!isEdit ? (
+              <>
+                <Title level={3} style={{ margin: 0 }}>
+                  {title}
+                </Title>
+                <EditOutlined onClick={() => setIsEdit(true)} />
+              </>
+            ) : (
+              <>
+                <Input
+                  value={title}
+                  autoFocus
+                  onChange={onTitleEdit}
+                  onPressEnter={() => setIsEdit(false)}
+                  onBlur={() => setIsEdit(false)}
+                />
+              </>
+            )}
           </Space>
         </div>
         <div className={styles.middle}>

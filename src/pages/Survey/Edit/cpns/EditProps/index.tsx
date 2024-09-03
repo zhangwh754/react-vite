@@ -3,8 +3,10 @@ import { Tabs, TabsProps, Space, Typography, Form, Input } from 'antd'
 import { FormOutlined, SettingOutlined } from '@ant-design/icons'
 import useGetSurveyDetailInfo from '@/hooks/useGetSurveyDetailInfo'
 import { ComponentPropsType, getComponentConfigByType } from '@/components/SurveyComponent'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedComponentProps } from '@/store/component/componentReducer'
+import { RootState } from '@/store/store'
+import { setPagePropsUpdate } from '@/store/pageReducer'
 
 const { Title } = Typography
 
@@ -37,8 +39,22 @@ const ComponentProp: FC = () => {
 }
 
 const PagesConfig: FC = () => {
+  const [form] = Form.useForm()
+  const { title, desc = '' } = useSelector((state: RootState) => state.page)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    form.setFieldsValue({ title, desc })
+  }, [title, desc, form])
+
+  const onAllFieldChange = () => {
+    const values = form.getFieldsValue()
+
+    dispatch(setPagePropsUpdate(values))
+  }
+
   return (
-    <Form layout="vertical" autoComplete="off">
+    <Form layout="vertical" form={form} autoComplete="off" onFieldsChange={onAllFieldChange}>
       <Form.Item label="标题" name="title" rules={[{ required: true, message: '请输入标题' }]}>
         <Input />
       </Form.Item>

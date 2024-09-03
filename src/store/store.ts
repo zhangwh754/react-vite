@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './userReducer'
+import pageReducer from './pageReducer'
 import componentReducer from './component/componentReducer'
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     component: componentReducer,
+    page: pageReducer,
   },
 })
 
