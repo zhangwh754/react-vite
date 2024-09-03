@@ -25,7 +25,7 @@ import {
   setComponentPaste,
 } from '@/store/component/componentReducer'
 import { setPagePropsUpdate } from '@/store/pageReducer'
-import { useRequest } from 'ahooks'
+import { useDebounceEffect, useRequest } from 'ahooks'
 import { saveSurveyData } from '@/network'
 import useGetPageInfo from '@/hooks/useGetPageInfo'
 
@@ -37,7 +37,7 @@ const EditHeader: FC<PropTypes> = () => {
   const { selectedComponent, selectedComponentId, copiedComponentData, componentsList } =
     useGetSurveyDetailInfo()
 
-  const { title, desc } = useGetPageInfo()
+  const pageInfo = useGetPageInfo()
 
   const { isHide = false, isLock = false } = selectedComponent || {}
 
@@ -86,14 +86,23 @@ const EditHeader: FC<PropTypes> = () => {
     },
   })
 
+  // 输入后5s自动保存一次
+  useDebounceEffect(
+    () => {
+      save(id, 'autosave', componentsList, pageInfo)
+    },
+    [componentsList, pageInfo],
+    { wait: 5000 }
+  )
+
   const { id = '' } = useParams()
 
   const onPublish = () => {
-    save(id, 'publish', componentsList, { title, desc })
+    save(id, 'publish', componentsList, pageInfo)
   }
 
   const onSave = () => {
-    save(id, 'save', componentsList, { title, desc })
+    save(id, 'save', componentsList, pageInfo)
   }
 
   return (
@@ -108,14 +117,14 @@ const EditHeader: FC<PropTypes> = () => {
             {!isEdit ? (
               <>
                 <Title level={3} style={{ margin: 0 }}>
-                  {title}
+                  {pageInfo.title}
                 </Title>
                 <EditOutlined onClick={() => setIsEdit(true)} />
               </>
             ) : (
               <>
                 <Input
-                  value={title}
+                  value={pageInfo.title}
                   autoFocus
                   onChange={onTitleEdit}
                   onPressEnter={() => setIsEdit(false)}

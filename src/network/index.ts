@@ -76,12 +76,12 @@ export async function deleteSurveyData(id: string): Promise<Res> {
 
 export async function saveSurveyData(
   id: string,
-  type: 'save' | 'publish',
+  type: 'save' | 'publish' | 'autosave',
   componentList: ComponentType[],
   pageInfo: PageState
 ): Promise<Res> {
   const res = await service.post(`/survey/save/${id}`, {
-    type,
+    type: type === 'publish' ? type : 'save',
     componentList: componentList,
     pageInfo: pageInfo,
   })
